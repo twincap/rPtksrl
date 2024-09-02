@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<style>
+  /* 페이지의 기본 폰트 및 중앙 정렬 스타일을 설정 */
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  /* 버튼 스타일: 크기, 여백, 글자 크기 설정 */
+  .button {
+    padding: 15px;
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    font-size: 18px;
+  }
+
+  /* 결과 입력 필드의 스타일: 크기, 글자 크기, 오른쪽 정렬 설정 */
+  #result {
+    width: 200px;
+    height: 30px;
+    font-size: 20px;
+    text-align: right;
+    margin-top: 20px;
+  }
+
+  /* 숫자 입력 필드의 스타일: 크기, 글자 크기, 오른쪽 정렬 설정 */
+  input[type="text"] {
+    width: 80px;
+    height: 30px;
+    font-size: 20px;
+    text-align: right;
+  }
+</style>
+<script>
+  // 더하기 연산을 수행하는 함수
+  function add() {
+    calculate("+"); // calculate 함수 호출, "+" 연산 수행
+  }
+
+  // 빼기 연산을 수행하는 함수
+  function sub() {
+    calculate("-"); // calculate 함수 호출, "-" 연산 수행
+  }
+
+  // 곱하기 연산을 수행하는 함수
+  function multi() {
+    calculate("*"); // calculate 함수 호출, "*" 연산 수행
+  }
+
+  // 나누기 연산을 수행하는 함수
+  function div() {
+    calculate("/"); // calculate 함수 호출, "/" 연산 수행
+  }
+
+  // 제곱 연산을 수행하는 함수
+  function square() {
+    let a = parseFloat(document.getElementById("number1").value); // 첫 번째 숫자 입력 값을 가져와서 숫자로 변환
+    document.getElementById("result").value = a * a; // 입력 값의 제곱을 결과 필드에 표시
+  }
+
+  // 제곱근 연산을 수행하는 함수
+  function sqrt() {
+    let a = parseFloat(document.getElementById("number1").value); // 첫 번째 숫자 입력 값을 가져와서 숫자로 변환
+    document.getElementById("result").value = Math.sqrt(a); // 입력 값의 제곱근을 결과 필드에 표시
+  }
+
+  // 퍼센트 연산을 수행하는 함수
+  function percentage() {
+    let a = parseFloat(document.getElementById("number1").value); // 첫 번째 숫자 입력 값을 가져와서 숫자로 변환
+    document.getElementById("result").value = a / 100; // 입력 값을 100으로 나눈 값을 결과 필드에 표시
+  }
+
+  // 입력 값과 결과를 초기화하는 함수
+  function reset() {
+    document.getElementById("number1").value = ""; // 첫 번째 숫자 입력 필드를 초기화
+    document.getElementById("number2").value = ""; // 두 번째 숫자 입력 필드를 초기화
+    document.getElementById("result").value = ""; // 결과 필드를 초기화
+  }
+
+  // 연산을 수행하는 함수
+  function calculate(operation) {
+    let a = parseFloat(document.getElementById("number1").value); // 첫 번째 숫자 입력 값을 가져와서 숫자로 변환
+    let b = parseFloat(document.getElementById("number2").value); // 두 번째 숫자 입력 값을 가져와서 숫자로 변환
+    let result; // 연산 결과를 저장할 변수
+
+    // 입력 값이 숫자가 아니거나 나누기 연산에서 두 번째 값이 없을 경우 에러 처리
+    if (isNaN(a) || (operation !== "sqrt" && operation !== "square" && isNaN(b))) { // a가 0이 아니거나 연산식이 제곱근이나 제곱이 아닌데 b가 없거나 숫자가 아닌경우
+      result = "Error"; // 잘못된 입력일 경우 "Error"를 결과로 설정
+    } else {
+      // 연산 종류에 따라 결과를 계산
+      switch (operation) {
+        case "+":
+          result = a + b; // 더하기 연산
+          break;
+        case "-":
+          result = a - b; // 빼기 연산
+          break;
+        case "*":
+          result = a * b; // 곱하기 연산
+          break;
+        case "/":
+          result = b !== 0 ? a / b : "Error"; // 나누기 연산 (0으로 나누는 경우 에러)
+          break;
+        default:
+          result = "Error"; // 지원되지 않는 연산일 경우 "Error" 반환
+      }
+    }
+
+    // 결과를 결과 필드에 표시
+    document.getElementById("result").value = result;
+  }
+</script>
+</head>
+<body>
+  <h1>간단한 계산기</h1> <!-- 제목 표시 -->
+  
+  <!-- 첫 번째 숫자 입력 필드 -->
+  숫자 1: <input type="text" id="number1"><br>
+
+  <!-- 두 번째 숫자 입력 필드 -->
+  숫자 2: <input type="text" id="number2"><br><br>
+
+  <!-- 연산 버튼들 -->
+  <input type="button" value="+" onClick="add()" class="button"> <!-- 더하기 버튼 -->
+  <input type="button" value="-" onClick="sub()" class="button"> <!-- 빼기 버튼 -->
+  <input type="button" value="*" onClick="multi()" class="button"> <!-- 곱하기 버튼 -->
+  <input type="button" value="/" onClick="div()" class="button"> <!-- 나누기 버튼 --><br>
+  
+  <!-- 추가 연산 버튼들 -->
+  <input type="button" value="x²" onClick="square()" class="button"> <!-- 제곱 버튼 -->
+  <input type="button" value="√" onClick="sqrt()" class="button"> <!-- 제곱근 버튼 -->
+  <input type="button" value="%" onClick="percentage()" class="button"> <!-- 퍼센트 버튼 --><br>
+  
+  <!-- 리셋 버튼 -->
+  <input type="button" value="리셋" onClick="reset()" class="button"><br>
+
+  <!-- 연산 결과 표시 필드 -->
+  <br>연산결과: <input type="text" id="result" readonly>
+</body>
+</html>
